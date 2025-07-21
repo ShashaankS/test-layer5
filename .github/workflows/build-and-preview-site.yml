@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'latest'
+          node-version: '20'
           cache: 'npm'
 
       - name: Install Hugo
@@ -48,10 +48,15 @@ jobs:
       - name: Deploy to Netlify
         id: netlify
         run: |
-          SITE_ID=${{ secrets.NETLIFY_SITE_ID }}
-          DEPLOY_ID=$(netlify deploy --dir=public --site=$SITE_ID --auth=${{ secrets.NETLIFY_AUTH_TOKEN }} --json | jq -r '.deploy_id')
+          # Authenticate with Netlify
+          netlify deploy --prod --dir=public --site ${{ secrets.NETLIFY_SITE_ID }} --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --json > deploy-output.json
+          
+          # Extract deploy URL
+          DEPLOY_ID=$(jq -r '.deploy_id' deploy-output.json)
+          DEPLOY_URL=$(jq -r '.deploy_url' deploy-output.json)
+          
           echo "deploy_id=$DEPLOY_ID" >> $GITHUB_OUTPUT
-          echo "deploy_url=https://$DEPLOY_ID--$(netlify sites:info --auth=${{ secrets.NETLIFY_AUTH_TOKEN }} --json | jq -r '.site.subdomain').netlify.app" >> $GITHUB_OUTPUT
+          echo "deploy_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
 
       - name: Comment on PR with preview link
         uses: actions/github-script@v6
