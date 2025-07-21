@@ -13,15 +13,34 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Setup Hugo
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
+          cache: 'npm'
+
+      - name: Install Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-            hugo-version: '0.146.0'
-            extended: true
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Install PostCSS
+        run: |
+          npm install -g postcss postcss-cli
+          if [ -f "package.json" ]; then
+            npm install
+          fi
 
       - name: Build with Hugo
         run: |
-          hugo --minify --baseURL "$DEPLOY_PRIME_URL"
+          hugo mod clean
+          hugo mod get -u
+          hugo \
+            --minify \
+            --gc \
+            --cleanDestinationDir \
+            --ignoreVendorPaths "github.com/google/docsy"
 
       - name: Install Netlify CLI
         run: npm install -g netlify-cli
