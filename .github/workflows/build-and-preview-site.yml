@@ -62,22 +62,8 @@ jobs:
           echo "deploy_id=$DEPLOY_ID" >> $GITHUB_OUTPUT
           echo "deploy_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
 
-      - name: Comment on PR with preview link
-        uses: actions/github-script@v6
-        if: github.event_name == 'pull_request'
+      - name: Comment Deploy URL
+        uses: ./.github/actions/comment-preview-on-pr
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            try {
-              const { data: comment } = await github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: `🚀 Preview deployment ready! [View site](${{ steps.netlify.outputs.deploy_url }})`
-              });
-              console.log('Comment posted successfully');
-            } catch (error) {
-              console.error('Error posting comment:', error.message);
-              // Fail gracefully - don't fail the whole workflow
-              core.setFailed('Failed to post comment, but continuing workflow');
-            }
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          deploy_url: "${{ steps.netlify.outputs.deploy-url }}"
