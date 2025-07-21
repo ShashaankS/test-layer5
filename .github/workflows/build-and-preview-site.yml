@@ -8,14 +8,27 @@ jobs:
   site-preview:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@master
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
-          hugo-version: 'latest'
-          extended: true
+          submodules: recursive
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
+      - name: Install Hugo
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget
+          wget https://github.com/gohugoio/hugo/releases/download/v0.125.7/hugo_extended_0.125.7_Linux-64bit.deb
+          sudo dpkg -i hugo_extended_0.125.7_Linux-64bit.deb
+          hugo version
 
       - name: Build with Hugo
-        run: hugo --minify --baseURL "$DEPLOY_PRIME_URL"
+        run: |
+          hugo --minify --baseURL "$DEPLOY_PRIME_URL"
 
       - name: Install Netlify CLI
         run: npm install -g netlify-cli
