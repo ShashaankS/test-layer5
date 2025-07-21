@@ -10,7 +10,9 @@ cascade: # tells hugo to set this as default type for all children content in th
 ---
 
 <!-- This page is only used in local dev setup , this wont be used or rendered in production -->
-
+- a
+- b
+- 
 {{% pageinfo %}}
 
 {{% /pageinfo %}}
