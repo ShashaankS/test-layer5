@@ -13,18 +13,11 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Set up Go
-        uses: actions/setup-go@v4
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
         with:
-          go-version: '1.21'
-
-      - name: Install Hugo
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget
-          wget https://github.com/gohugoio/hugo/releases/download/v0.125.7/hugo_extended_0.125.7_Linux-64bit.deb
-          sudo dpkg -i hugo_extended_0.125.7_Linux-64bit.deb
-          hugo version
+            hugo-version: '0.125.7'
+            extended: true
 
       - name: Build with Hugo
         run: |
