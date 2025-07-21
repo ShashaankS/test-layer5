@@ -1,10 +1,15 @@
 {
-  "name": "test",
-  "description": "Our cloud native application and infrastructure management software enables organizations to expect more from their infrastructure. At Layer5, we believe collaboration enables innovation, and infrastructure enables collaboration",
-  "version": "1.0.0",
-  "private": true,
-  "author": "Layer5 Authors",
-  "license": "",  "scripts": {
+  "name": "docsy-example-site",
+  "version": "0.12.0",
+  "version.next": "0.12.1-dev-unreleased",
+  "description": "Example site that uses Docsy theme for technical documentation.",
+  "repository": "github:google/docsy-example",
+  "homepage": "https://example.docsy.dev",
+  "author": "Docsy Authors",
+  "license": "Apache-2.0",
+  "bugs": "https://github.com/google/docsy-example/issues",
+  "spelling": "cSpell:ignore docsy hugo htmltest precheck postbuild rtlcss -",
+  "scripts": {
     "_build": "npm run _hugo-dev --",
     "_check:links": "echo IMPLEMENTATION PENDING for check-links; echo",
     "_hugo": "hugo --cleanDestinationDir",
