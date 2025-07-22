@@ -70,7 +70,7 @@ jobs:
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: `🚀 Preview for branch \`${{ github.head_ref }}\` (${{ github.sha }})\n🔗 ${{ steps.netlify.outputs.deploy-url }}`
+                body: `🚀 Preview for commit ${{ github.sha }} : ${{ steps.netlify.outputs.deploy-url }}`
               });
             } catch (error) {
               console.error('Error posting comment:', error.message);
