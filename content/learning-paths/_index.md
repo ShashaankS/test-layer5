@@ -22,6 +22,7 @@ cascade: # tells hugo to set this as default type for all children content in th
 - j
 - k
 - l
+- m
   
 {{% pageinfo %}}
 
