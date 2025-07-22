@@ -9,7 +9,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  deploy-preview:
+  site-preview:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
