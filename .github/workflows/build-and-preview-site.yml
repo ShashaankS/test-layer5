@@ -66,11 +66,12 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             try {
+              const shortSha = '${{ github.head_sha }}'.slice(0,7);
               await github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: `🚀 Preview for branch \`${{ github.head_ref }}\` (commit ${${{ github.head_sha }}.slice(0,7)})\n🔗 ${'${{ steps.netlify.outputs.deploy-url }}'}`
+                body: `🚀 Preview for branch \`${{ github.head_ref }}\` (commit ${shortSha})\n🔗 ${{ steps.netlify.outputs.deploy-url }}`
               });
             } catch (error) {
               console.error('Error posting comment:', error.message);
