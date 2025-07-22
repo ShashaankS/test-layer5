@@ -14,6 +14,7 @@ cascade: # tells hugo to set this as default type for all children content in th
 - b
 - c
 - d
+- e
   
 {{% pageinfo %}}
 
